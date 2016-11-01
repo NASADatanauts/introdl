@@ -2,6 +2,26 @@
 This repository is meant to facilitate an interactive quick introduction to deep learning.
 If you have stumbled upon this repo on your own, there are other better resources for you on the internet.
 
+## Setup
+- Install Docker https://docs.docker.com/engine/installation/ 
+- Clone this repository https://help.github.com/articles/cloning-a-repository/
+- In the introdl directory, build your Docker image. This step may take 1-2 hours
+  - If you will be running on a CPU-based tensorflow  
+  
+    ```sudo docker build -t <your_user_name>/introdl -f Dockerfile.cpu .```    
+  - If you will be running on a GPU-based tensorflow
+  
+    ```sudo docker build -t <your_user_name>/introdl -f Dockerfile.gpu .```    
+    
+- [Install Google Chrome](https://www.google.com/chrome/browser/desktop/index.html) (I had issues running Jupyter notebook on Firefox within the Docker container)
+  - On Ubuntu, you may encounter installation issues which require [enabling the Universe Repository](http://askubuntu.com/questions/148638/how-do-i-enable-the-universe-repository)
+- Run bash in your Docker container
+
+  ```sudo docker run -it -p 8888:8888 -p 6006:6006 -v <your_path_to_repo>/introdl:/root/introdl <your_user_name>/introdl bash```
+- Start Jupyter within the Docker container
+
+  ```jupyter notebook```
+
 ## Attribution
 Thank you to the following resources:
 - [saiprashanths/dl-docker](https://github.com/saiprashanths/dl-docker) for the deep learning docker file
