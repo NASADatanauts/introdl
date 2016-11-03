@@ -19,7 +19,7 @@ If you have stumbled upon this repo on your own, there are other better resource
   - On Ubuntu, you may encounter installation issues which require [enabling the Universe Repository](http://askubuntu.com/questions/148638/how-do-i-enable-the-universe-repository)
 - Run bash in your Docker container
 
-  ```sudo docker run -it -p 8888:8888 -p 6006:6006 -v <your_path_to_repo>/introdl:/root/introdl <your_user_name>/introdl bash```
+  ```sudo docker run -it -p 8888:8888 -p 6006:6006 <your_user_name>/introdl bash```
 - Start Jupyter within the Docker container
 
   ```jupyter notebook```
