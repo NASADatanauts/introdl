@@ -2,6 +2,8 @@
 This repository is meant to facilitate an interactive quick introduction to deep learning.
 If you have stumbled upon this repo on your own, there are other better resources for you on the internet.
 
+@Datanauts add your questions, thoughts, concerns, resources in this [community wiki](wiki)
+
 ## Setup
 - Install Docker https://docs.docker.com/engine/installation/ 
 - Clone this repository https://help.github.com/articles/cloning-a-repository/
