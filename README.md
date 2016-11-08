@@ -6,7 +6,10 @@ If you have stumbled upon this repo on your own, there are other better resource
 
 ## Setup
 - Install Docker https://docs.docker.com/engine/installation/ 
-- Clone this repository https://help.github.com/articles/cloning-a-repository/
+- Clone this repository 
+
+    ```git clone --recursive git@github.com:alexisylchan/introdl.git```
+
 - In the introdl directory, build your Docker image. This step may take 1-2 hours
   - If you will be running on a CPU-based tensorflow  
   
