@@ -3,6 +3,7 @@ This repository is meant to facilitate an interactive quick introduction to deep
 If you have stumbled upon this repo on your own, there are other better resources for you on the internet.
 
 @Datanauts add your questions, thoughts, concerns, resources in this [community wiki](https://github.com/alexisylchan/introdl/wiki)
+If you want to contribute, please [send me a pull request](https://yangsu.github.io/pull-request-tutorial/)!
 
 ## Setup
 - Install Docker https://docs.docker.com/engine/installation/ 
