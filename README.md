@@ -10,6 +10,12 @@ If you have stumbled upon this repo on your own, there are other better resource
 
     ```git clone --recursive git@github.com:alexisylchan/introdl.git```
 
+- On a Windows machine, uncomment the following lines from Dockerfile.cpu or Dockerfile.gpu 
+    ```
+    # COPY run_jupyter.sh /root/
+    # COPY demo/ /root/demo/
+    ```
+
 - In the introdl directory, build your Docker image. This step may take 1-2 hours
   - If you will be running on a CPU-based tensorflow  
   
@@ -22,7 +28,10 @@ If you have stumbled upon this repo on your own, there are other better resource
   - On Ubuntu, you may encounter installation issues which require [enabling the Universe Repository](http://askubuntu.com/questions/148638/how-do-i-enable-the-universe-repository)
 - Run bash in your Docker container
 
-  ```sudo docker run -it -p 8888:8888 -p 6006:6006 <your_user_name>/introdl bash```
+  ```chmod 777 start.sh```
+  
+  ```./start.sh <absolute_path_to_introdl_folder> <your_user_name>/introdl```
+
 - Start Jupyter within the Docker container
 
   ```jupyter notebook```
