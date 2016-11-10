@@ -1,0 +1,171 @@
+FROM nvidia/cuda:7.5-cudnn5-devel
+
+ARG TENSORFLOW_VERSION=0.10
+ARG TENSORFLOW_ARCH=gpu
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        bc \
+        build-essential \
+        cmake \
+        curl \
+        g++ \
+        gfortran \
+        git \
+        libhdf5-dev \
+        libjpeg-dev \
+        liblcms2-dev \
+        libopenblas-dev \
+        liblapack-dev \
+        libopenjpeg2 \
+        libpng12-dev \
+        libssl-dev \
+        libtiff5-dev \
+        libwebp-dev \
+        libzmq3-dev \
+        nano \
+        pkg-config \
+        python \
+        python-dev \
+        rsync \
+        software-properties-common \
+        swig \
+        unzip \
+        vim \
+        wget \
+        zip \
+        zlib1g-dev \
+        && \
+    apt-get clean && \
+    apt-get autoremove && \
+    rm -rf /var/lib/apt/lists/* && \
+# Link BLAS library to use OpenBLAS using the alternatives mechanism (https://www.scipy.org/scipylib/building/linux.html#debian-ubuntu)
+    update-alternatives --set libblas.so.3 /usr/lib/openblas-base/libblas.so.3
+
+# Install pip
+RUN curl -fSsL -O https://bootstrap.pypa.io/get-pip.py && \
+    python get-pip.py && \
+    rm get-pip.py
+
+# Add SNI support to Python
+RUN pip --no-cache-dir install \
+        pyopenssl \
+        ndg-httpsclient \
+        pyasn1
+
+
+RUN apt-get update && apt-get install -y \
+        python-pip \
+        python-setuptools \
+        && \
+    apt-get clean && \
+    apt-get autoremove && \
+    rm -rf /var/lib/apt/lists/*
+
+
+# Install other useful Python packages using pip
+RUN pip --no-cache-dir install --upgrade ipython && \
+    pip --no-cache-dir install \
+        Cython \
+        numpy \
+        scipy \
+        nose \
+        h5py \
+        scikit-image \
+        matplotlib \
+        pandas \
+        scikit-learn \
+        sympy \
+        ipykernel \
+        jupyter \
+        path.py \
+        Pillow \
+        plotly \
+        pygments \
+        seaborn \
+        six \
+        sphinx \
+        wheel \
+        zmq \
+        && \
+    python -m ipykernel.kernelspec
+
+# Set up our notebook config.
+COPY jupyter_notebook_config.py /root/.jupyter/
+
+# Jupyter has issues with being run directly:
+#   https://github.com/ipython/ipython/issues/7062
+# We just add a little wrapper script.
+COPY run_jupyter.sh /
+
+# Set up Bazel.
+
+# We need to add a custom PPA to pick up JDK8, since trusty doesn't
+# have an openjdk8 backport.  openjdk-r is maintained by a reliable contributor:
+# Matthias Klose (https://launchpad.net/~doko).  It will do until
+# we either update the base image beyond 14.04 or openjdk-8 is
+# finally backported to trusty; see e.g.
+#   https://bugs.launchpad.net/trusty-backports/+bug/1368094
+RUN add-apt-repository -y ppa:openjdk-r/ppa && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends openjdk-8-jdk openjdk-8-jre-headless && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Running bazel inside a `docker build` command causes trouble, cf:
+#   https://github.com/bazelbuild/bazel/issues/134
+# The easiest solution is to set up a bazelrc file forcing --batch.
+RUN echo "startup --batch" >>/root/.bazelrc
+# Similarly, we need to workaround sandboxing issues:
+#   https://github.com/bazelbuild/bazel/issues/418
+RUN echo "build --spawn_strategy=standalone --genrule_strategy=standalone" \
+    >>/root/.bazelrc
+ENV BAZELRC /root/.bazelrc
+# Install the most recent bazel release.
+ENV BAZEL_VERSION 0.3.1
+WORKDIR /
+RUN mkdir /bazel && \
+    cd /bazel && \
+    curl -fSsL -O https://github.com/bazelbuild/bazel/releases/download/$BAZEL_VERSION/bazel-$BAZEL_VERSION-installer-linux-x86_64.sh && \
+    curl -fSsL -o /bazel/LICENSE.txt https://raw.githubusercontent.com/bazelbuild/bazel/master/LICENSE.txt && \
+    chmod +x bazel-*.sh && \
+    ./bazel-$BAZEL_VERSION-installer-linux-x86_64.sh && \
+    cd / && \
+    rm -f /bazel/bazel-$BAZEL_VERSION-installer-linux-x86_64.sh
+
+# Download and build TensorFlow.
+
+RUN git clone -b r${TENSORFLOW_VERSION} --recursive --recurse-submodules https://github.com/tensorflow/tensorflow.git && \
+    cd tensorflow && \
+    git checkout r${TENSORFLOW_VERSION}
+WORKDIR /tensorflow
+
+# Configure the build for our CUDA configuration.
+ENV CUDA_PATH /usr/local/cuda-7.5
+ENV CUDA_TOOLKIT_PATH /usr/local/cuda-7.5
+ENV CUDNN_INSTALL_PATH /usr/local/cuda-7.5
+ENV LD_LIBRARY_PATH /usr/local/cuda-7.5/lib64:/usr/local/cuda-7.5/extras/CUPTI/lib64:/usr/local/nvidia/lib64
+ENV TF_NEED_CUDA 1
+ENV TF_CUDA_COMPUTE_CAPABILITIES=3.0,3.5,5.2,6.1
+
+RUN ./configure && \
+    bazel build -c opt --config=cuda tensorflow/tools/pip_package:build_pip_package && \
+    bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/pip && \
+    pip install --upgrade /tmp/pip/tensorflow-*.whl
+
+# Install Keras
+ARG KERAS_VERSION=1.1.0
+ENV KERAS_BACKEND=tensorflow
+RUN pip --no-cache-dir install git+git://github.com/fchollet/keras.git@${KERAS_VERSION}
+
+WORKDIR /root
+
+# Uncomment the following two lines if you're using windows
+# COPY run_jupyter.sh /root/
+# COPY demo/ /root/demo/
+
+# TensorBoard
+EXPOSE 6006
+# IPython
+EXPOSE 8888
+
+RUN ["/bin/bash"]
