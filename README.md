@@ -10,6 +10,7 @@ If you want to contribute, please [send me a pull request](https://yangsu.github
 To build your own Docker image, see [Build Setup](#build-setup)
 
 - Install Docker https://docs.docker.com/engine/installation/ 
+- If you are using NVIDIA CUDA-enabled GPU, install [nvidia-docker](https://github.com/NVIDIA/nvidia-docker)
 - Pull Docker image:
     - CPU (Windows):
     
@@ -41,6 +42,7 @@ To build your own Docker image, see [Build Setup](#build-setup)
 <a id="build-setup"></a>
 ### Build Setup 
 - Install Docker https://docs.docker.com/engine/installation/ 
+- If you are using NVIDIA CUDA-enabled GPU, install [nvidia-docker](https://github.com/NVIDIA/nvidia-docker)
 - Clone this repository 
 
     ```git clone --recursive git@github.com:alexisylchan/introdl.git```
