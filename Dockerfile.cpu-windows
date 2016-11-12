@@ -1,0 +1,11 @@
+FROM alexisylchan/introdlcpu
+
+# Uncomment the following two lines if you're using windows
+COPY run_jupyter.sh /root/
+COPY demo/ /root/demo/
+
+# Expose Ports for TensorBoard (6006), Ipython (8888)
+EXPOSE 6006 8888
+
+WORKDIR "/root"
+CMD ["/bin/bash"]
