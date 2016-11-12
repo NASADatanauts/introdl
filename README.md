@@ -35,8 +35,8 @@ To build your own Docker image, see [Build Setup](#build-setup)
 
   ```jupyter notebook```
  
-
-### Build Setup <a id="build-setup"></a>
+<a id="build-setup"></a>
+### Build Setup 
 - Install Docker https://docs.docker.com/engine/installation/ 
 - Clone this repository 
 
