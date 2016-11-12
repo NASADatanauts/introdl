@@ -38,7 +38,8 @@ To build your own Docker image, see [Build Setup](#build-setup)
       ```./start.sh <absolute_path_to_introdl_folder> <docker_image>```
   
     - If you're using GPU:
-        ```sudo docker run -it -p 8888:8888 -p 6006:6006 -v <absolute_path_to_introdl_folder>:/root/introdl <docker_image> bash```
+        ```sudo nvidia-
+        -it -p 8888:8888 -p 6006:6006 -v <absolute_path_to_introdl_folder>:/root/introdl <docker_image> bash```
 
 - Start Jupyter within the Docker container
 
