@@ -6,6 +6,37 @@ If you have stumbled upon this repo on your own, there are other better resource
 If you want to contribute, please [send me a pull request](https://yangsu.github.io/pull-request-tutorial/)!
 
 ## Setup
+### Tutorial Setup 
+To build your own Docker image, see [Build Setup](#build-setup)
+
+- Install Docker https://docs.docker.com/engine/installation/ 
+- Pull Docker image:
+    - CPU:
+    
+    ``` sudo docker pull alexisylchan/introdlcpu```
+    - GPU (CUDA 7.5):
+    
+    ``` sudo docker pull alexisylchan/introdlcuda7.5```
+    - GPU (CUDA 8):
+    
+    ``` sudo docker pull alexisylchan/introdlcuda8```
+    
+- Clone this repository 
+
+    ```git clone --recursive git@github.com:alexisylchan/introdl.git```
+    
+- Run bash in your Docker container
+
+  ```chmod 777 start.sh```
+  
+  ```./start.sh <absolute_path_to_introdl_folder> <docker_image>```
+
+- Start Jupyter within the Docker container
+
+  ```jupyter notebook```
+ 
+
+### Build Setup <a id="build-setup"></a>
 - Install Docker https://docs.docker.com/engine/installation/ 
 - Clone this repository 
 
