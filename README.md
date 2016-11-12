@@ -31,9 +31,14 @@ To build your own Docker image, see [Build Setup](#build-setup)
     
 - Run bash in your Docker container
 
-  ```chmod 777 start.sh```
+    - If you're using CPU:
+    
+      ```chmod 777 start.sh```
+
+      ```./start.sh <absolute_path_to_introdl_folder> <docker_image>```
   
-  ```./start.sh <absolute_path_to_introdl_folder> <docker_image>```
+    - If you're using GPU:
+        ```sudo docker run -it -p 8888:8888 -p 6006:6006 -v <absolute_path_to_introdl_folder>:/root/introdl <docker_image> bash```
 
 - Start Jupyter within the Docker container
 
@@ -64,11 +69,15 @@ To build your own Docker image, see [Build Setup](#build-setup)
 - [Install Google Chrome](https://www.google.com/chrome/browser/desktop/index.html) (I had issues running Jupyter notebook on Firefox within the Docker container)
   - On Ubuntu, you may encounter installation issues which require [enabling the Universe Repository](http://askubuntu.com/questions/148638/how-do-i-enable-the-universe-repository)
 - Run bash in your Docker container
+    - If you're using CPU:
+      ```chmod 777 start.sh```
 
-  ```chmod 777 start.sh```
+      ```./start.sh <absolute_path_to_introdl_folder> <docker_image>```
   
-  ```./start.sh <absolute_path_to_introdl_folder> <your_user_name>/introdl```
-
+    - If you're using GPU:
+        
+        ```sudo docker run -it -p 8888:8888 -p 6006:6006 -v <absolute_path_to_introdl_folder>:/root/introdl <docker_image> bash```
+        
 - Start Jupyter within the Docker container
 
   ```jupyter notebook```
