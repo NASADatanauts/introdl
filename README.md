@@ -11,15 +11,18 @@ To build your own Docker image, see [Build Setup](#build-setup)
 
 - Install Docker https://docs.docker.com/engine/installation/ 
 - Pull Docker image:
-    - CPU:
+    - CPU (Windows):
     
-    ``` sudo docker pull alexisylchan/introdlcpu```
+        ``` sudo docker pull alexisylchan/introdlcpu-windows```   
+    - CPU (Other operating systems):
+    
+        ``` sudo docker pull alexisylchan/introdlcpu```
     - GPU (CUDA 7.5):
     
-    ``` sudo docker pull alexisylchan/introdlcuda7.5```
+        ``` sudo docker pull alexisylchan/introdlcuda7.5```
     - GPU (CUDA 8):
     
-    ``` sudo docker pull alexisylchan/introdlcuda8```
+        ``` sudo docker pull alexisylchan/introdlcuda8```
     
 - Clone this repository 
 
@@ -42,19 +45,19 @@ To build your own Docker image, see [Build Setup](#build-setup)
 
     ```git clone --recursive git@github.com:alexisylchan/introdl.git```
 
-- On a Windows machine, uncomment the following lines from Dockerfile.cpu or Dockerfile.gpu 
-    ```
-    # COPY run_jupyter.sh /root/
-    # COPY demo/ /root/demo/
-    ```
-
 - In the introdl directory, build your Docker image. This step may take 1-2 hours
-  - If you will be running on a CPU-based tensorflow  
+  - CPU:    
+    - Windows:    
+    
+        ```sudo docker build -t <your_user_name>/introdl -f Dockerfile.cpu-windows .```    
+    
+    - Other operating systems: 
+    
+        ```sudo docker build -t <your_user_name>/introdl -f Dockerfile.cpu .```    
+    
+  - Machine with NVIDIA CUDA-enabled GPU:
   
-    ```sudo docker build -t <your_user_name>/introdl -f Dockerfile.cpu .```    
-  - If you will be running on a GPU-based tensorflow
-  
-    ```sudo docker build -t <your_user_name>/introdl -f Dockerfile.gpu .```    
+        ```sudo docker build -t <your_user_name>/introdl -f Dockerfile.gpu .```    
     
 - [Install Google Chrome](https://www.google.com/chrome/browser/desktop/index.html) (I had issues running Jupyter notebook on Firefox within the Docker container)
   - On Ubuntu, you may encounter installation issues which require [enabling the Universe Repository](http://askubuntu.com/questions/148638/how-do-i-enable-the-universe-repository)
