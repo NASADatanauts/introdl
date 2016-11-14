@@ -24,6 +24,8 @@ To build your own Docker image, see [Build Setup](#build-setup)
     - GPU (CUDA 8):
     
         ``` sudo docker pull alexisylchan/introdlcuda8```
+        
+- Install Git-LFS for [Linux](https://help.github.com/articles/installing-git-large-file-storage/#platform-linux), [Windows](https://help.github.com/articles/installing-git-large-file-storage/#platform-windows), or [Mac](https://help.github.com/articles/installing-git-large-file-storage/#platform-mac)
     
 - Clone this repository 
 
@@ -49,6 +51,7 @@ To build your own Docker image, see [Build Setup](#build-setup)
 ### Build Setup 
 - Install Docker https://docs.docker.com/engine/installation/ 
 - If you are using NVIDIA CUDA-enabled GPU, install [nvidia-docker](https://github.com/NVIDIA/nvidia-docker)
+- Install Git-LFS for [Linux](https://help.github.com/articles/installing-git-large-file-storage/#platform-linux), [Windows](https://help.github.com/articles/installing-git-large-file-storage/#platform-windows), or [Mac](https://help.github.com/articles/installing-git-large-file-storage/#platform-mac)
 - Clone this repository 
 
     ```git clone --recursive git@github.com:alexisylchan/introdl.git```
@@ -73,12 +76,13 @@ To build your own Docker image, see [Build Setup](#build-setup)
     - If you're using CPU:
       ```chmod 777 start.sh```
 
-      ```./start.sh <absolute_path_to_introdl_folder> <docker_image>```
-  
+      ```./start.sh <absolute_path_to_introdl_folder> <docker_image>```  
+    
     - If you're using GPU:
-        
-        ```sudo docker run -it -p 8888:8888 -p 6006:6006 -v <absolute_path_to_introdl_folder>:/root/introdl <docker_image> bash```
-        
+    
+        ```sudo nvidia-
+        -it -p 8888:8888 -p 6006:6006 -v <absolute_path_to_introdl_folder>:/root/introdl <docker_image> bash```
+
 - Start Jupyter within the Docker container
 
   ```jupyter notebook```
