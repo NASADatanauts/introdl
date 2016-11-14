@@ -36,11 +36,17 @@ To build your own Docker image, see [Build Setup](#build-setup)
     - If you're using CPU:
     
       ```chmod 777 start.sh```
-
-      ```./start.sh <absolute_path_to_introdl_folder> <docker_image>```
+    
+      - Windows:
+       
+            ```docker run -it -p 8888:8888 -p 6006:6006 <docker_image> bash```
+        
+      - Non-windows:
+      
+            ```./start.sh <absolute_path_to_introdl_folder> <docker_image>```  
   
     - If you're using GPU:
-        ```sudo nvidia-
+        ```sudo nvidia-docker run
         -it -p 8888:8888 -p 6006:6006 -v <absolute_path_to_introdl_folder>:/root/introdl <docker_image> bash```
 
 - Start Jupyter within the Docker container
@@ -74,13 +80,20 @@ To build your own Docker image, see [Build Setup](#build-setup)
   - On Ubuntu, you may encounter installation issues which require [enabling the Universe Repository](http://askubuntu.com/questions/148638/how-do-i-enable-the-universe-repository)
 - Run bash in your Docker container
     - If you're using CPU:
-      ```chmod 777 start.sh```
-
-      ```./start.sh <absolute_path_to_introdl_folder> <docker_image>```  
     
+      ```chmod 777 start.sh```
+    
+      - Windows:
+       
+            ```docker run -it -p 8888:8888 -p 6006:6006 <docker_image> bash```
+        
+      - Non-windows:
+      
+            ```./start.sh <absolute_path_to_introdl_folder> <docker_image>```  
+
     - If you're using GPU:
     
-        ```sudo nvidia-
+        ```sudo nvidia-docker run
         -it -p 8888:8888 -p 6006:6006 -v <absolute_path_to_introdl_folder>:/root/introdl <docker_image> bash```
 
 - Start Jupyter within the Docker container
